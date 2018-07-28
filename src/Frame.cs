@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Kata.Bowling
 {
-    public class Frame : IFrame
+    public class Frame
     {
         public Frame(int rank)
         {
