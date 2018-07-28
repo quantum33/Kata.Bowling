@@ -55,6 +55,5 @@ namespace Kata.Bowling
 
         private bool HasSingleRoll
             => Rolls.Count == 1;
-
     }
 }
