@@ -5,16 +5,39 @@ namespace Kata.Bowling
 {
     public class Frame
     {
+        public Frame(int rank)
+        {
+            Rank = rank;
+        }
+
+        public int Rank { get; }
+
+        public IReadOnlyCollection<Roll> Rolls
+        {
+            get { return _rolls; }
+        }
+
         public Frame AddRoll(Roll roll)
         {
-            _rolls.Add(roll);
+            if (!IsTenthFrame)
+            {
+                _rolls.Add(roll);
+            }
+            else if (IsTenthFrame && !IsMaxRollsLimitReached)
+            {
+                _rolls.Add(roll);
+            }
+            else if (IsTenthFrame && IsEligibleForExtraBall)
+            {
+                _rolls.Add(roll);                
+            }
             return this;
         }
 
-        public int GetScore(RankedFrame nextFrame)
+        public int GetScore(Frame nextFrame)
             => GetDownPinCount() + GetBonus(nextFrame);
 
-        private int GetBonus(RankedFrame nextFrame)
+        private int GetBonus(Frame nextFrame)
         {
             if (IsStrike)
             {
@@ -32,11 +55,11 @@ namespace Kata.Bowling
             return 0;
         }
 
-        private readonly List<Roll> _rolls = new List<Roll>();
-        public IReadOnlyCollection<Roll> Rolls
-        {
-            get { return _rolls; }
-        }
+        public bool IsTenthFrame
+            => Rank == Constants.MaxFrameCount - 1;
+
+        public bool NotIsTenthFrame
+            => !IsTenthFrame;
 
         public bool IsStrike
             => IsAllPinDown && HasSingleRoll;
@@ -47,7 +70,7 @@ namespace Kata.Bowling
         public bool IsMaxRollLimitReached
             => Rolls.Count == Constants.MaxRollCount;
 
-        private int GetDownPinCount()
+        public int GetDownPinCount()
             => Rolls.Sum(r => r.DownPinCount);
 
         private bool IsAllPinDown
@@ -56,5 +79,13 @@ namespace Kata.Bowling
         private bool HasSingleRoll
             => Rolls.Count == 1;
 
+        private bool IsMaxRollsLimitReached
+            => Rolls.Count == Constants.MaxRollCount;
+
+        private bool IsEligibleForExtraBall
+            => IsTenthFrame
+            && (IsStrike || IsSpare);
+
+        private readonly List<Roll> _rolls = new List<Roll>();
     }
 }

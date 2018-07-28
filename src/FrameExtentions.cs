@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace Kata.Bowling
 {
-    public static class RankedFramesExtentions
+    public static class FrameExtentions
     {
-        public static bool HasNoElement(this IEnumerable<RankedFrame> frames)
+        public static bool HasNoElement(this IEnumerable<Frame> frames)
             => !frames.Any();
 
-        public static void AddTo(this RankedFrame frame, List<RankedFrame> frames)
+        public static void AddTo(this Frame frame, List<Frame> frames)
         {
             if (frame != null)
             {

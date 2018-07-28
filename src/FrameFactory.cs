@@ -2,9 +2,9 @@
 {
     public static class FrameFactory
     {
-        public static RankedFrame CreateIf(bool predicate, int frameRank)
+        public static Frame CreateIf(bool predicate, int frameRank)
             => predicate
-            ? new RankedFrame(frameRank)
+            ? new Frame(frameRank)
             : null;
     }
 }

@@ -10,8 +10,8 @@ namespace Kata.Bowling.UnitTests
         [TestMethod]
         public void AddTo_NonNullInstance_ListContainsTheInstance()
         {
-            var instance = new RankedFrame(0);
-            var frames = new List<RankedFrame>();
+            var instance = new Frame(0);
+            var frames = new List<Frame>();
 
             instance.AddTo(frames);
 
@@ -21,8 +21,8 @@ namespace Kata.Bowling.UnitTests
         [TestMethod]
         public void AddTo_NullInstance_ListNotContainNullInstance()
         {
-            RankedFrame instance = null;
-            var frames = new List<RankedFrame>();
+            Frame instance = null;
+            var frames = new List<Frame>();
 
             instance.AddTo(frames);
 
