@@ -43,8 +43,8 @@ namespace Kata.Bowling
 
             Frame CreateFrame()
                 => FrameFactory.CreateIf(_frames.HasNoElement(), frameRank: 0)
-                ?? FrameFactory.CreateIf(_frames.Last().NotIsTenthFrame && _frames.Last().IsMaxRollLimitReached, frameRank: _frames.Last().Rank + 1)
-                ?? FrameFactory.CreateIf(_frames.Last().NotIsTenthFrame && _frames.Last().IsStrike, frameRank: _frames.Last().Rank + 1);
+                ?? FrameFactory.CreateIf(_frames.Last().IsNotTenthFrame && _frames.Last().IsMaxRollLimitReached, frameRank: _frames.Last().Rank + 1)
+                ?? FrameFactory.CreateIf(_frames.Last().IsNotTenthFrame && _frames.Last().IsStrike, frameRank: _frames.Last().Rank + 1);
         }
 
         private readonly List<Frame> _frames = new List<Frame>();

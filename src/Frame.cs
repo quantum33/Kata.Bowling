@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Kata.Bowling
 {
-    public class Frame
+    public class Frame : IFrame
     {
         public Frame(int rank)
         {
@@ -39,18 +39,17 @@ namespace Kata.Bowling
 
         private int GetBonus(Frame nextFrame)
         {
-            if (IsStrike)
+            if (IsStrike && nextFrame.IsTenthFrame)
             {
-                if (nextFrame.IsTenthFrame)
-                {
-                    return nextFrame.Rolls.Take(2).Sum(r => r.DownPinCount);
-                }
+                return nextFrame.Rolls.Take(2).Sum(r => r.DownPinCount);
+            }
+            else if (IsStrike && nextFrame.IsNotTenthFrame)
+            { 
                 return nextFrame.Rolls.Sum(r => r.DownPinCount);
             }
             else if (IsSpare)
             {
-                var first = nextFrame.Rolls.FirstOrDefault();
-                return first != null ? first.DownPinCount : 0;
+                return nextFrame.Rolls.FirstOrDefault()?.DownPinCount ?? 0;
             }
             return 0;
         }
@@ -58,7 +57,7 @@ namespace Kata.Bowling
         public bool IsTenthFrame
             => Rank == Constants.MaxFrameCount - 1;
 
-        public bool NotIsTenthFrame
+        public bool IsNotTenthFrame
             => !IsTenthFrame;
 
         public bool IsStrike
