@@ -20,13 +20,7 @@ namespace Kata.Bowling
                 throw new InvalidOperationException($"maximum frame count is NOT reached ({_frames.Count}). You must continue gaming!");
             }
 
-            int totalScore = 0;
-            _frames.ForEach(frame =>
-            {
-                var nextFrame = GetNextFrame(frame);
-                totalScore += frame.GetScore(nextFrame);
-            });
-            return totalScore;
+            return _frames.Sum(f => f.GetScore(GetNextFrame(f)));
         }
 
         public int GetFrameCount() => _frames.Count;
